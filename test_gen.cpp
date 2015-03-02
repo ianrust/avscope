@@ -9,24 +9,29 @@ int main (int argc, char ** argv)
     info.frequency = 500;
     info.bytes_per_sample = 2;
 
-    Points star;
-    star.length = 10;
-    star.max_val = 1.0;
-    star.locations = new Point[10];
-    star.locations[0] = Point(-0.6,-1.0);
-    star.locations[1] = Point(0.0,-0.3);
-    star.locations[2] = Point(0.6,-1.0);
-    star.locations[3] = Point(0.35,-0.2);
-    star.locations[4] = Point(1.0,0.2);
-    star.locations[5] = Point(0.3,0.3);
-    star.locations[6] = Point(0.0,1.0);
-    star.locations[7] = Point(-0.3,0.3);
-    star.locations[8] = Point(-1.0,0.2);
-    star.locations[9] = Point(-0.35,-0.2);
+    Points square1;
+    square1.length = 4;
+    square1.max_val = 1.0;
+    square1.locations = new Point[4];
+    square1.locations[0] = Point(-1.0,-1.0);
+    square1.locations[1] = Point(-1.0,-0.5);
+    square1.locations[2] = Point(-0.5,-0.5);
+    square1.locations[3] = Point(-0.5,-1.0);
+    WaveForm wf1;
 
-    WaveForm wf;
+    assembleWaveform(&square1,&wf1,&info,true);
 
-    assembleWaveform(&star,&wf,&info,true);
+    Points square2;
+    square2.length = 4;
+    square2.max_val = 1.0;
+    square2.locations = new Point[4];
+    square2.locations[0] = Point(1.0,1.0);
+    square2.locations[1] = Point(1.0,0.5);
+    square2.locations[2] = Point(0.5,0.5);
+    square2.locations[3] = Point(0.5,1.0);
+    WaveForm wf2;
+
+    assembleWaveform(&square2,&wf2,&info,true);
 
     //send to speakers
 
@@ -48,7 +53,8 @@ int main (int argc, char ** argv)
 
     for (int i = 0; i<10000; i++)
     {
-        ao_play(device,wf.data,wf.length);
+        ao_play(device,wf1.data,wf1.length);
+        ao_play(device,wf2.data,wf2.length);
     }
 
     ao_close(device);
