@@ -33,7 +33,7 @@ int main (int argc, char ** argv)
     vert_line.max_val = 1.0;
     vert_line.locations = new Point[2];
     vert_line.locations[0] = Point(0.0,-1.0);
-    vert_line.locations[1] = Point(0.0,1.0*sqrt(3));
+    vert_line.locations[1] = Point(0.0,1.0*sqrt(3)-1.0);
     WaveForm wf_vert_line;
 
     assembleWaveform(&vert_line,&wf_vert_line,&info,true);
