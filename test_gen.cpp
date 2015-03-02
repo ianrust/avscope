@@ -2,6 +2,25 @@
 #include <string.h>
 #include <ao/ao.h>
 
+void createCircle(float center_x,float center_y,float r,float start_angle,Points * points)
+{
+    float dtheta = M_PI/float(points->length);
+
+    points->locations = new Point[points->length];
+
+    int index = 0;
+    for (float angle = start_angle; angle < M_PI+start_angle; angle += dtheta)
+    {
+        Point radial_point;
+        radial_point.x = r * cos(angle);
+        radial_point.x = r * sin(angle);
+
+        points->locations[index] = radial_point;
+
+        index++;
+    }
+}
+
 int main (int argc, char ** argv)
 {
     SampleInfo info;
@@ -42,6 +61,20 @@ int main (int argc, char ** argv)
 
     assembleWaveform(&triangle,&wf_triangle,&info,true);
 
+    Points left_circle;
+    left_circle.length = 100;
+    left_circle.max_val = 1.0;
+    createCircle(-0.5,sqrt(3)/2.0-1.0,1.0,-2.0*M_PI/6.0,&left_circle);
+    WaveForm wf_left_circle;
+    assembleWaveform(&left_circle,&wf_left_circle,&info,true);
+
+    Points right_circle;
+    right_circle.length = 100;
+    right_circle.max_val = 1.0;
+    createCircle(0.5,sqrt(3)/2.0-1.0,1.0,-4.0*M_PI/6.0,&right_circle);
+    WaveForm wf_right_circle;
+    assembleWaveform(&right_circle,&wf_right_circle,&info,true);
+
     //send to speakers
 
     ao_device * device;
@@ -65,6 +98,8 @@ int main (int argc, char ** argv)
         ao_play(device,wf_vert_line.data,wf_vert_line.length);
         ao_play(device,wf_triangle.data,wf_triangle.length);
         ao_play(device,wf_small_triangle.data,wf_small_triangle.length);
+        ao_play(device,wf_left_circle.data,wf_left_circle.length);
+        ao_play(device,wf_right_circle.data,wf_right_circle.length);
     }
 
     ao_close(device);
