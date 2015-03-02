@@ -9,29 +9,38 @@ int main (int argc, char ** argv)
     info.frequency = 500;
     info.bytes_per_sample = 2;
 
-    Points square1;
-    square1.length = 4;
-    square1.max_val = 1.0;
-    square1.locations = new Point[4];
-    square1.locations[0] = Point(-1.0,-1.0);
-    square1.locations[1] = Point(-1.0,-0.5);
-    square1.locations[2] = Point(-0.5,-0.5);
-    square1.locations[3] = Point(-0.5,-1.0);
-    WaveForm wf1;
+    Points vert_line;
+    vert_line.length = 2;
+    vert_line.max_val = 1.0;
+    vert_line.locations = new Point[2];
+    vert_line.locations[0] = Point(0.0,-1.0);
+    vert_line.locations[1] = Point(0.0,1.0);
+    WaveForm wf_vert_line;
 
-    assembleWaveform(&square1,&wf1,&info,true);
+    assembleWaveform(&vert_line,&wf_vert_line,&info,true);
 
-    Points square2;
-    square2.length = 4;
-    square2.max_val = 1.0;
-    square2.locations = new Point[4];
-    square2.locations[0] = Point(1.0,1.0);
-    square2.locations[1] = Point(1.0,0.5);
-    square2.locations[2] = Point(0.5,0.5);
-    square2.locations[3] = Point(0.5,1.0);
-    WaveForm wf2;
+    Points small_triangle;
+    small_triangle.length = 3;
+    small_triangle.max_val = 1.0;
+    small_triangle.locations = new Point[3];
+    small_triangle.locations[0] = Point(0.0,-1.0);
+    small_triangle.locations[1] = Point(-0.5,0.0);
+    small_triangle.locations[2] = Point(0.5,0.0);
+    WaveForm wf_small_triangle;
 
-    assembleWaveform(&square2,&wf2,&info,true);
+    assembleWaveform(&small_triangle,&wf_small_triangle,&info,true);
+
+    Points triangle;
+    triangle.length = 4;
+    triangle.max_val = 1.0;
+    triangle.locations = new Point[4];
+    triangle.locations[0] = Point(0.0,-1.0);
+    triangle.locations[1] = Point(-1.0,-1.0);
+    triangle.locations[2] = Point(0.0,1.0);
+    triangle.locations[3] = Point(1.0,-1.0);
+    WaveForm wf_triangle;
+
+    assembleWaveform(&triangle,&wf_triangle,&info,true);
 
     //send to speakers
 
@@ -53,8 +62,9 @@ int main (int argc, char ** argv)
 
     for (int i = 0; i<10000; i++)
     {
-        ao_play(device,wf1.data,wf1.length);
-        ao_play(device,wf2.data,wf2.length);
+        ao_play(device,wf_vert_line.data,wf_vert_line.length);
+        ao_play(device,wf_triangle.data,wf_triangle.length);
+        ao_play(device,wf_small_triangle.data,wf_small_triangle.length);
     }
 
     ao_close(device);
