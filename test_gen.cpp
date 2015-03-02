@@ -26,7 +26,7 @@ int main (int argc, char ** argv)
 
     WaveForm wf;
 
-    assembleWaveform(&star,&wf,&info,false);
+    assembleWaveform(&star,&wf,&info,true);
 
     //send to speakers
 
