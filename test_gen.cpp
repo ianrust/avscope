@@ -6,21 +6,27 @@ int main (int argc, char ** argv)
 {
     SampleInfo info;
     info.rate = 44100;
-    info.frequency = 100;
+    info.frequency = 500;
     info.bytes_per_sample = 2;
 
-    Points square;
-    square.length = 4;
-    square.max_val = 1.0;
-    square.locations = new Point[4];
-    square.locations[0] = Point(-1.0,-1.0);
-    square.locations[1] = Point(1.0,-1.0);
-    square.locations[2] = Point(1.0,1.0);
-    square.locations[3] = Point(-1.0,1.0);
+    Points star;
+    star.length = 10;
+    star.max_val = 1.0;
+    star.locations = new Point[10];
+    star.locations[0] = Point(-0.6,-1.0);
+    star.locations[1] = Point(0.0,-0.3);
+    star.locations[2] = Point(0.6,-1.0);
+    star.locations[3] = Point(0.35,-0.2);
+    star.locations[4] = Point(1.0,0.2);
+    star.locations[5] = Point(0.3,0.3);
+    star.locations[6] = Point(0.0,1.0);
+    star.locations[7] = Point(-0.3,0.3);
+    star.locations[8] = Point(-1.0,0.2);
+    star.locations[9] = Point(-0.35,-0.2);
 
     WaveForm wf;
 
-    assembleClosedWaveform(&square,&wf,&info);
+    assembleClosedWaveform(&star,&wf,&info);
 
     //send to speakers
 
@@ -40,7 +46,7 @@ int main (int argc, char ** argv)
 
     device = ao_open_live(default_driver,&format,NULL);
 
-    for (int i = 0; i<100; i++)
+    for (int i = 0; i<10000; i++)
     {
         ao_play(device,wf.data,wf.length);
     }
