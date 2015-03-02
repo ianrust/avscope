@@ -51,7 +51,7 @@ static void pointsToBytes(const Points * const samples,WaveForm * const wf,const
 
     wf->data = new char[wf->length];
 
-    int max_val = pow(2,8*info->bytes_per_sample-1);
+    int max_val = pow(2,8*info->bytes_per_sample-2);
 
     for (int i = 0; i < samples->length; i++)
     {
