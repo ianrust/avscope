@@ -14,7 +14,7 @@ int main (int argc, char ** argv)
     vert_line.max_val = 1.0;
     vert_line.locations = new Point[2];
     vert_line.locations[0] = Point(0.0,-1.0);
-    vert_line.locations[1] = Point(0.0,1.0);
+    vert_line.locations[1] = Point(0.0,1.0*sqrt(3));
     WaveForm wf_vert_line;
 
     assembleWaveform(&vert_line,&wf_vert_line,&info,true);
@@ -24,8 +24,8 @@ int main (int argc, char ** argv)
     small_triangle.max_val = 1.0;
     small_triangle.locations = new Point[3];
     small_triangle.locations[0] = Point(0.0,-1.0);
-    small_triangle.locations[1] = Point(-0.5,0.0);
-    small_triangle.locations[2] = Point(0.5,0.0);
+    small_triangle.locations[1] = Point(-sqrt(3)/2,0.0);
+    small_triangle.locations[2] = Point(sqrt(3)/2,0.0);
     WaveForm wf_small_triangle;
 
     assembleWaveform(&small_triangle,&wf_small_triangle,&info,true);
@@ -36,7 +36,7 @@ int main (int argc, char ** argv)
     triangle.locations = new Point[4];
     triangle.locations[0] = Point(0.0,-1.0);
     triangle.locations[1] = Point(-1.0,-1.0);
-    triangle.locations[2] = Point(0.0,1.0);
+    triangle.locations[2] = Point(0.0,1.0*sqrt(3));
     triangle.locations[3] = Point(1.0,-1.0);
     WaveForm wf_triangle;
 
