@@ -66,11 +66,11 @@ static void pointsToBytes(const Points * const samples,WaveForm * const wf,const
     }
 }
 
-void assembleClosedWaveform(const Points * const loop,WaveForm * const wf,const SampleInfo * const info)
+void assembleWaveform(const Points * const loop,WaveForm * const wf,const SampleInfo * const info,bool closed)
 {
     int ub_length = info->rate / info->frequency; // a priori length for samples, will be updated with something slightly smaller later
 
-    float total_edge_length = totalLength(loop,true);
+    float total_edge_length = totalLength(loop,closed);
 
     float sample_length = total_edge_length/float(ub_length);
     float leftover_length = sample_length;
@@ -78,11 +78,13 @@ void assembleClosedWaveform(const Points * const loop,WaveForm * const wf,const 
     int act_samples_encoded = 0;
 
     Points sampled_points;
-    sampled_points.locations = new Point[ub_length+2];
+    sampled_points.locations = new Point[ub_length+1];
     sampled_points.max_val = loop->max_val;
     sampled_points.length = 0;
 
-    for (int i = 0; i < loop->length; i++)
+    int end_index = closed ? loop->length : loop->length-1;
+
+    for (int i = 0; i < end_index; i++)
     {
         Point p1,p2;
 
@@ -112,6 +114,8 @@ void assembleClosedWaveform(const Points * const loop,WaveForm * const wf,const 
 
         leftover_length = this_segment_length - final_dist;
     }
+
+    sampled_points.length--;
 
     pointsToBytes(&sampled_points,wf,info);
 }
