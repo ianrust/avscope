@@ -5,13 +5,15 @@
 #include <ao/ao.h>
 
 #include "svgparser.h"
+#include "wfassem.h"
+#include "wftypes.h"
 
 using namespace std;
 
 void printUsage()
 {
-    cerr << "Usage is:" < endl;
-    cerr << "svg2scope filename.svg num_repeats frequency(optional) sample_rate(optional) bytes_per_sample(optional):" < endl;
+    cerr << "Usage is:" << endl;
+    cerr << "svg2scope filename.svg num_repeats frequency(optional) sample_rate(optional) bytes_per_sample(optional):" << endl;
 }
 
 int main(int argc,char ** argv)
@@ -37,19 +39,19 @@ int main(int argc,char ** argv)
     }
     else if (argc == 6)
     {
-        info.rate = atoi(argc[4]);
-        info.frequency = atoi(argc[3]);
-        info.bytes_per_sample = atoi(argc[5]);
+        info.rate = atoi(argv[4]);
+        info.frequency = atoi(argv[3]);
+        info.bytes_per_sample = atoi(argv[5]);
     }
 
     int cycles = atoi(argv[2]);
 
     Points loop;
-    Waveform wf;
+    WaveForm wf;
 
     svgToPoints(argv[1],&loop);
 
-    assembleWaveform(&loop,&wf,&info,true);
+    assembleWaveform(&loop,&wf,&info);
 
 
     //send to speakers

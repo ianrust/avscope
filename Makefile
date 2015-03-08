@@ -2,12 +2,13 @@ CC = g++
 
 CFLAGS = -lao -ldl -lm
 
-TARGET = test_gen
+WFINCLUDE = wfassem.h wftypes.h
+SVGINCLUDE = svgparser.h
 
-all: $(TARGET) example
+all: svg2scope test_gen
 
-$(TARGET): $(TARGET).cpp wfassem.h wftypes.h
-	$(CC) $(TARGET).cpp -o $(TARGET) $(CFLAGS)
+svg2scope: svg2scope.cpp $(WFINCLUDE) $(SVGINCLUDE)
+	$(CC) svg2scope.cpp -o svg2scope $(CFLAGS)	
 
-example: ao_example.c
-	$(CC) ao_example.c -o ao_example $(CFLAGS)
+test_gen: test_gen.cpp $(WFINCLUDE)
+	$(CC) test_gen.cpp -o test_gen $(CFLAGS)

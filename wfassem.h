@@ -1,3 +1,6 @@
+#ifndef WF_ASSEM
+#define WF_ASSEM
+
 #include <math.h>
 #include <iostream>
 
@@ -66,11 +69,11 @@ static void pointsToBytes(const Points * const samples,WaveForm * const wf,const
     }
 }
 
-void assembleWaveform(const Points * const loop,WaveForm * const wf,const SampleInfo * const info,bool closed)
+void assembleWaveform(const Points * const loop,WaveForm * const wf,const SampleInfo * const info)
 {
     int ub_length = info->rate / info->frequency; // a priori length for samples, will be updated with something slightly smaller later
 
-    float total_edge_length = totalLength(loop,closed);
+    float total_edge_length = totalLength(loop,loop->closed);
 
     float sample_length = total_edge_length/float(ub_length);
     float leftover_length = sample_length;
@@ -82,7 +85,7 @@ void assembleWaveform(const Points * const loop,WaveForm * const wf,const Sample
     sampled_points.max_val = loop->max_val;
     sampled_points.length = 0;
 
-    int end_index = closed ? loop->length : loop->length-1;
+    int end_index = loop->closed ? loop->length : loop->length-1;
 
     for (int i = 0; i < end_index; i++)
     {
@@ -119,3 +122,5 @@ void assembleWaveform(const Points * const loop,WaveForm * const wf,const Sample
 
     pointsToBytes(&sampled_points,wf,info);
 }
+
+#endif

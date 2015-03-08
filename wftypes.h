@@ -1,3 +1,6 @@
+#ifndef WF_TYPES
+#define WF_TYPES
+
 struct WaveForm
 {
     char * data;
@@ -32,4 +35,7 @@ struct Points
     Point * locations;
     int length;
     float max_val;
-}; 
+    bool closed;
+};
+
+#endif

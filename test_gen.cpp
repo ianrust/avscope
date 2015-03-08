@@ -19,6 +19,8 @@ void createCircle(float center_x,float center_y,float r,float start_angle,Points
 
         index++;
     }
+
+    points->closed = true;
 }
 
 int main (int argc, char ** argv)
@@ -34,9 +36,10 @@ int main (int argc, char ** argv)
     vert_line.locations = new Point[2];
     vert_line.locations[0] = Point(0.0,-1.0);
     vert_line.locations[1] = Point(0.0,1.0*sqrt(3)-1.0);
+    vert_line.closed = true;
     WaveForm wf_vert_line;
 
-    assembleWaveform(&vert_line,&wf_vert_line,&info,true);
+    assembleWaveform(&vert_line,&wf_vert_line,&info);
 
     Points small_triangle;
     small_triangle.length = 3;
@@ -45,9 +48,10 @@ int main (int argc, char ** argv)
     small_triangle.locations[0] = Point(0.0,-1.0);
     small_triangle.locations[1] = Point(-0.5,sqrt(3)/2.0-1.0);
     small_triangle.locations[2] = Point(0.5,sqrt(3)/2.0-1.0);
+    small_triangle.closed = true;
     WaveForm wf_small_triangle;
 
-    assembleWaveform(&small_triangle,&wf_small_triangle,&info,true);
+    assembleWaveform(&small_triangle,&wf_small_triangle,&info);
 
     Points triangle;
     triangle.length = 4;
@@ -57,23 +61,24 @@ int main (int argc, char ** argv)
     triangle.locations[1] = Point(-1.0,-1.0);
     triangle.locations[2] = Point(0.0,sqrt(3)-1.0);
     triangle.locations[3] = Point(1.0,-1.0);
+    triangle.closed = true;
     WaveForm wf_triangle;
 
-    assembleWaveform(&triangle,&wf_triangle,&info,true);
+    assembleWaveform(&triangle,&wf_triangle,&info);
 
     Points left_circle;
     left_circle.length = 100;
     left_circle.max_val = 1.3;
     createCircle(-0.5,sqrt(3)/2.0-1.0,1.0,-2.0*M_PI/6.0,&left_circle);
     WaveForm wf_left_circle;
-    assembleWaveform(&left_circle,&wf_left_circle,&info,true);
+    assembleWaveform(&left_circle,&wf_left_circle,&info);
 
     Points right_circle;
     right_circle.length = 100;
     right_circle.max_val = 1.3;
     createCircle(0.5,sqrt(3)/2.0-1.0,1.0,-4.0*M_PI/6.0,&right_circle);
     WaveForm wf_right_circle;
-    assembleWaveform(&right_circle,&wf_right_circle,&info,true);
+    assembleWaveform(&right_circle,&wf_right_circle,&info);
 
     //send to speakers
 
