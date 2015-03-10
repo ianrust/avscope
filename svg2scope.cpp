@@ -13,43 +13,45 @@ using namespace std;
 void printUsage()
 {
     cerr << "Usage is:" << endl;
-    cerr << "svg2scope filename.svg num_repeats frequency(optional) sample_rate(optional) bytes_per_sample(optional):" << endl;
+    cerr << "svg2scope filename.svg scale num_repeats frequency(optional) sample_rate(optional) bytes_per_sample(optional):" << endl;
 }
 
 int main(int argc,char ** argv)
 {
     SampleInfo info;
-    if (argc < 3)
+    if (argc < 4)
     {
         cerr << "Too few inputs" << endl;
         printUsage();
         return 1;
     }
-    else if (argc == 3)
+    else if (argc == 4)
     {
         info.rate = 44100;
         info.frequency = 500;
         info.bytes_per_sample = 2;
     }
-    else if (argc != 6)
+    else if (argc != 7)
     {
         cerr << "Incorrect number of inputs" << endl;
         printUsage();
         return 1;        
     }
-    else if (argc == 6)
+    else if (argc == 7)
     {
-        info.rate = atoi(argv[4]);
-        info.frequency = atoi(argv[3]);
-        info.bytes_per_sample = atoi(argv[5]);
+        info.rate = atoi(argv[5]);
+        info.frequency = atoi(argv[4]);
+        info.bytes_per_sample = atoi(argv[6]);
     }
 
-    int cycles = atoi(argv[2]);
+    float scale = atof(argv[2]);
+    int cycles = atoi(argv[3]);
 
     Points loop;
     WaveForm wf;
 
     svgToPoints(argv[1],&loop);
+    loop.max_val /= scale;
 
     assembleWaveform(&loop,&wf,&info);
 
