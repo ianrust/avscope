@@ -58,6 +58,27 @@ int main(int argc,char ** argv)
                 delete[] file;
             }
         }
+        else
+        {
+            Points * loop = new Points;
+            WaveForm wf;
+
+            char * file = new char[80];
+            memset(file,0,80);
+            strcat(file,resource_dir);
+            strcat(file,"colon");
+            strcat(file,".svg");
+
+            svgToPoints(file,loop);
+            loop->max_val = 2.0;
+            translatePoints(loop,&offset);
+
+            assembleWaveform(loop,&wf,&info);
+
+            digits[position][0] = wf;
+
+            delete[] file;
+        }
     }
 
     ao_device * device;
