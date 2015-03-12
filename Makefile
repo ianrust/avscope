@@ -3,7 +3,7 @@ CC = g++
 SRC = src
 BIN = bin
 
-CFLAGS = -lao -ldl -lm -Iinclude -Iinclude/rapidxml
+CFLAGS = -g -lao -ldl -lm -Iinclude -Iinclude/rapidxml
 
 .DEFAULT_GOAL = all
 

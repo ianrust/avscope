@@ -8,6 +8,10 @@
 #include "wfassem.h"
 #include "wftypes.h"
 
+using namespace std;
+
+const char resource_dir[] = "resources/clock/";
+
 int main(int argc,char ** argv)
 {
     WaveForm ** digits;
@@ -19,17 +23,23 @@ int main(int argc,char ** argv)
     digits[3] = new WaveForm[10];
     digits[4] = new WaveForm[10];
 
-    // for (int digit = 0; digit < 10; digit++)
-    // {
-    //     Points loop;
-    //     WaveForm wf;
+    for (int digit = 0; digit < 10; digit++)
+    {
+        Points * loop = new Points;
+        WaveForm wf;
 
-    //     char number = (char)(((int)'0') + 1);
+        char * file = new char[80];
+        char number = (char)(((int)'0') + digit);
+        strcat(file,resource_dir);
+        strncat(file,&number,1);
+        strcat(file,".svg");
 
-    //     cout << number << endl;
+        std::cout << file << std::endl;
 
-    //     // svgToPoints("resources/",&loop);
+        svgToPoints(file,loop);
 
-    //     // assembleWaveform(&loop,&wf,&info);
-    // }
+        // assembleWaveform(&loop,&wf,&info);
+
+        delete[] file;
+    }
 }

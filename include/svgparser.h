@@ -132,7 +132,6 @@ static void pathToPoints(char * const path_string,Points * const loop)
     char * count_string = new char[strlen(path_string)];
     strncpy(count_string,path_string,strlen(path_string));
     int path_length = getPathLength(count_string);
-    delete[] count_string;
 
     loop->locations = new Point[path_length];
     loop->length = path_length;
@@ -177,24 +176,34 @@ static void pathToPoints(char * const path_string,Points * const loop)
     normalizePoints(loop);
 }
 
+void translatePoints(Points * const loop,const Point * const translation)
+{
+    for (int i = 0; i < loop->length; i++)
+    {
+        loop->locations[i].x += translation->x;
+        loop->locations[i].y += translation->y;
+    }   
+}
+
 void svgToPoints(const char * const filename,Points * const loop)
 {
     //read in file to char array
-    ifstream infile(filename);
+    ifstream infile(filename,ios::in|ios::binary);
     infile.seekg(0,infile.end);
     int file_length = infile.tellg();
     infile.seekg(0,infile.beg);
-    char * buffer = new char[file_length];
+    char * buffer =  new char[file_length+1];
     infile.read(buffer,file_length);
+    buffer[file_length] = '\0';
     infile.close();
 
     //parse xml
-    xml_document<> doc;
+    xml_document<>doc;
     xml_node<> * root_node;
     xml_node<> * shape_node;
-    doc.parse<0>(buffer);
+    doc.parse<parse_trim_whitespace>(buffer);
     
-    //find first path element in the first group (inkscape format)
+    // find first path element in the first group (inkscape format)
     root_node = doc.first_node("svg");
     shape_node = root_node->first_node("g")->first_node("path");
 
@@ -203,5 +212,7 @@ void svgToPoints(const char * const filename,Points * const loop)
 
     //parse into x,y points (normalized)
     pathToPoints(path_string,loop);
+
+    delete[] buffer;
 }
 #endif
