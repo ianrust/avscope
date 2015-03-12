@@ -31,7 +31,7 @@ int main(int argc,char ** argv)
     for (int position = 0; position < 5; position++)
     {
 
-        Point offset((2.5-position)/5.0,0);
+        Point offset(-(3.0-position)/1.5,0);
 
         if (position != 2)
         {
@@ -41,13 +41,14 @@ int main(int argc,char ** argv)
                 WaveForm wf;
 
                 char * file = new char[80];
+                memset(file,0,80);
                 char number = (char)(((int)'0') + digit);
                 strcat(file,resource_dir);
                 strncat(file,&number,1);
                 strcat(file,".svg");
 
                 svgToPoints(file,loop);
-
+                loop->max_val = 2.0;
                 translatePoints(loop,&offset);
 
                 assembleWaveform(loop,&wf,&info);
