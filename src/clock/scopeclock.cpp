@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ao/ao.h>
+#include <time.h>
 
 #include "svgparser.h"
 #include "wfassem.h"
@@ -99,14 +100,33 @@ int main(int argc,char ** argv)
     
     int cycles = 10000;
 
-    for (int cycle = 0; cycle < cycles; cycle++)
+    time_t rawtime;
+    struct tm * timeinfo;
+
+    int hour,first_digit_hour,second_digit_hour,minute,first_digit_minute,second_digit_minute;
+
+    while(1)
     {
-        ao_play(device,digits[0][1].data,digits[0][1].length);
-        ao_play(device,digits[1][2].data,digits[1][2].length);
+        //get current time
+        time (&rawtime);
+        timeinfo = localtime (&rawtime);
+
+        hour = (*timeinfo).tm_hour % 12;
+        if (hour == 0) hour = 12;
+        second_digit_hour = hour % 10;
+        first_digit_hour = (hour - second_digit_hour)/10;
+        minute = (*timeinfo).tm_min;
+        second_digit_minute = minute % 10;
+        first_digit_minute = (minute - second_digit_minute)/10;
+
+        ao_play(device,digits[0][first_digit_hour].data,digits[0][first_digit_hour].length);
+        ao_play(device,digits[1][second_digit_hour].data,digits[1][second_digit_hour].length);
         ao_play(device,digits[2][0].data,digits[2][0].length);
-        ao_play(device,digits[3][3].data,digits[3][3].length);
-        ao_play(device,digits[4][4].data,digits[4][4].length);
+        ao_play(device,digits[3][first_digit_minute].data,digits[3][first_digit_minute].length);
+        ao_play(device,digits[4][second_digit_minute].data,digits[4][second_digit_minute].length);
     }
+
+    delete timeinfo;
 
     ao_close(device);
 
