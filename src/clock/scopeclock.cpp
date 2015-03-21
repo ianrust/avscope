@@ -11,7 +11,7 @@
 
 using namespace std;
 
-const char resource_dir[] = "resources/clock/";
+const char resource_dir[] = "/usr/local/share/avscope/clock/";
 
 int main(int argc,char ** argv)
 {

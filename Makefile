@@ -21,7 +21,9 @@ test_gen: $(SRC)/test_gen.cpp include/wfassem.h
 	$(CC) $(SRC)/test_gen.cpp -o $(BIN)/test_gen $(CFLAGS)
 
 prefix = /usr/local
+datadir = $(prefix)/share
 
 install: all
 	install -m 0755 $(BIN)/scopeclock $(prefix)/bin
 	install -m 0755 $(BIN)/svg2scope $(prefix)/bin
+	mkdir -p $(datadir)/avscope/clock && cp -r ./resources/clock $(datadir)/avscope
