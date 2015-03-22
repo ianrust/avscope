@@ -32,7 +32,12 @@ int main(int argc,char ** argv)
     for (int position = 0; position < 5; position++)
     {
 
-        Point offset(-(3.0-position)/1.5,0);
+       Point offset(-(2.0-position)/1.5,0);
+
+       if (position == 4)
+       {
+           offset = Point(1.6,0);
+       }
 
         if (position != 2)
         {
@@ -57,6 +62,7 @@ int main(int argc,char ** argv)
                 digits[position][digit] = wf;
 
                 delete[] file;
+                delete loop;
             }
         }
         else
@@ -79,6 +85,7 @@ int main(int argc,char ** argv)
             digits[position][0] = wf;
 
             delete[] file;
+            delete loop;
         }
     }
 
