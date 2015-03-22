@@ -1,0 +1,26 @@
+#!/bin/bash
+# /etc/init.d/scopeclock
+
+case "$1" in 
+    start)
+        echo "Starting scopeclock"
+        amixer sset PCM,0 100% && /usr/local/bin/scopclock
+        ;;
+    stop)
+        echo "Stopping scopeclock"
+        killall scopeclock
+        ;;
+    restart)
+        echo "Stopping scopeclock"
+        killall scopeclock
+        echo "Starting scopeclock"
+        amixer sset PCM,0 100% && /usr/local/bin/scopclock
+        ;;
+    *)
+        echo "Usage: /etc/init.d/scopeclock start|stop|restart"
+        exit 1
+        ;;
+esac
+
+exit 0
+amixer sset PCM,0 100%

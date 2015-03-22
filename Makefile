@@ -27,3 +27,4 @@ install: all
 	install -m 0755 $(BIN)/scopeclock $(prefix)/bin
 	install -m 0755 $(BIN)/svg2scope $(prefix)/bin
 	mkdir -p $(datadir)/avscope/clock && cp -r ./resources/clock $(datadir)/avscope
+	sudo cp ./scripts/scopeclock /etc/init.d && chmod +x /etc/init.d/scopeclock && update-rc.d scopeclock defaults
