@@ -9,7 +9,8 @@ CFLAGS = -g -lao -ldl -lm -Iinclude -Iinclude/rapidxml
 
 test: test_gen
 exec: scopeclock svg2scope
-all: scopeclock svg2scope test_gen
+live: dopescope
+all: scopeclock svg2scope test_gen dopescope
 
 scopeclock: $(SRC)/clock/scopeclock.cpp include/*
 	$(CC) $(SRC)/clock/scopeclock.cpp -o $(BIN)/scopeclock $(CFLAGS)
@@ -19,6 +20,9 @@ svg2scope: $(SRC)/svg2scope.cpp include/*
 
 test_gen: $(SRC)/test_gen.cpp include/wfassem.h
 	$(CC) $(SRC)/test_gen.cpp -o $(BIN)/test_gen $(CFLAGS)
+
+dopescope: $(SRC)/dopescope.cpp include/*
+			$(CC) $(SRC)/dopescope.cpp -o $(BIN)/dopescope -lrtmidi -lasound -lpthread $(CFLAGS)
 
 prefix = /usr/local
 datadir = $(prefix)/share
