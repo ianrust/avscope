@@ -39,8 +39,8 @@ int main(int argc,char ** argv)
     }
     else if (argc == 7)
     {
-        info.rate = atoi(argv[5]);
         info.frequency = atoi(argv[4]);
+        info.rate = atoi(argv[5]);
         info.bytes_per_sample = atoi(argv[6]);
     }
 
