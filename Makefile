@@ -10,10 +10,13 @@ CFLAGS = -g -lao -ldl -lm -Iinclude -Iinclude/rapidxml
 test: test_gen
 exec: scopeclock svg2scope
 live: dopescope
-all: scopeclock svg2scope test_gen dopescope
+all: scopeclock svg2scope test_gen pillow
 
 scopeclock: $(SRC)/clock/scopeclock.cpp include/*
 	$(CC) $(SRC)/clock/scopeclock.cpp -o $(BIN)/scopeclock $(CFLAGS)
+
+pillow: $(SRC)/pillow.cpp include/*
+	$(CC) $(SRC)/pillow.cpp -o $(BIN)/pillow $(CFLAGS)
 
 svg2scope: $(SRC)/svg2scope.cpp include/*
 	$(CC) $(SRC)/svg2scope.cpp -o $(BIN)/svg2scope $(CFLAGS)
