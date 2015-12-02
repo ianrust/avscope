@@ -10,7 +10,7 @@
 
 using namespace std;
 
-const unsigned int num_frames = 10;
+const unsigned int num_frames = 11;
 char* filenames[num_frames] = {"./pillows/pillow1.svg",
                                 "./pillows/pillow2.svg",
                                 "./pillows/pillow3.svg",
@@ -20,7 +20,8 @@ char* filenames[num_frames] = {"./pillows/pillow1.svg",
                                 "./pillows/pillow7.svg",
                                 "./pillows/pillow8.svg",
                                 "./pillows/pillow9.svg",
-                                "./pillows/pillow91.svg"};
+                                "./pillows/pillow91.svg",
+                                "./pillows/pillow92.svg"};
 WaveForm wfs[num_frames];
 Points loops[num_frames];
 
@@ -65,15 +66,25 @@ int main(int argc, char ** argv)
 
     device = ao_open_live(default_driver,&format,NULL);
     
+    int frame = 0;
+    int direction = 1;
     while (1)
     {
-        for (int i = 0; i < num_frames; i++)
+        for (int cycle = 0; cycle < cycles; cycle++)
         {
-            std::cout << i << std::endl;
-            for (int cycle = 0; cycle < cycles; cycle++)
-            {
-                ao_play(device,wfs[i].data,wfs[i].length);
-            }
+            ao_play(device,wfs[frame].data,wfs[frame].length);
+        }
+
+        frame += direction;
+        if (frame == num_frames)
+        {
+            direction = -1;
+            frame = num_frames - 1;
+        }
+        else if (frame == -1)
+        {
+            direction = 1;
+            frame = 0;
         }
     }
 
